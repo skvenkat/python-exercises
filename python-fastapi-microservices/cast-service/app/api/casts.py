@@ -1,9 +1,9 @@
 # cast-service/app/api/casts.py
 
-from fastapi import Header, APIRouter
+from fastapi import Header, APIRouter, HTTPException
 from typing import List
 
-from app.api.models import CastIn, CastOut
+from app.api.models import CastIn, CastOut, CastUpdate
 from app.api import db_manager
 from app.api.utils import trace
 
@@ -33,7 +33,7 @@ async def get_cast(id: int):
     return cast
 
 @trace
-@casts.update('/{id}', status_code=204)
+@casts.put('/{id}', status_code=204)
 async def update_cast(id: int, payload: CastUpdate):
     cast = await db_manager.get_cast(id)
     if not cast:

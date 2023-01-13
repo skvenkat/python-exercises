@@ -1,12 +1,12 @@
 # movie-service/app/main.py
 
-from fastapi import Header, APIRouter
+from fastapi import Header, APIRouter, HTTPException
 from typing import List
 
 from app.api.models import MovieIn, MovieOut
 from app.api import db_manager
 from app.api.service import is_cast_present
-from api.app.utils import trace
+from app.api.utils import trace
 
 movies = APIRouter()
 
@@ -39,7 +39,7 @@ async def get_movie(id: int):
 
 @trace
 @movies.put('/{id}', status_code=204)
-async def update_movie(id: int, payload: Movie):
+async def update_movie(id: int, payload: MovieIn):
     movie = await db_manager.get_movie(id)
     if not movie:
         raise HTTPException(status_code=404, detail="Movie with given id not found")

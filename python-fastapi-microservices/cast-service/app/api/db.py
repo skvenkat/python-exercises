@@ -14,7 +14,7 @@ metadata = MetaData()
 casts = Table(
     'casts',
     metadata,
-    Column('id', Integer, primary_key=true),
+    Column('id', Integer, primary_key=True),
     Column('name', String(30)),
     Column('nationality', String(30)),
 )
