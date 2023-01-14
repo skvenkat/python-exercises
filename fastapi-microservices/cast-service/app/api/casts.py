@@ -17,7 +17,7 @@ async def index():
 @trace
 @casts.post('/', status_code=201)
 async def add_cast(payload: CastIn):
-    cast_id = await db_manager.add_cast(**payload.dict())
+    cast_id = await db_manager.add_cast(payload)
     response = {
         "id": cast_id,
         **payload.dict(),
@@ -39,7 +39,7 @@ async def update_cast(id: int, payload: CastUpdate):
     if not cast:
         raise HTTPException(status_code=404, detail="Cast with given id is not found")
     update_data = payload.dict(exclude_unset=True)
-    cast_in_db = MovieIn(**cast)
+    cast_in_db = CastUpdate(**cast)
     update_cast = cast_in_db.copy(update=update_data)
     return await db_manager.update_cast(id, update_cast)
 
