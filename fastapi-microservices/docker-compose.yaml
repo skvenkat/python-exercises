@@ -12,7 +12,7 @@ services:
     ports:
       - 8081:8080
     environment:
-      - DATABASE_URI=postgresql://db_username:db_password@pgsql_db:5432/movie_db_dev
+      - DATABASE_URI=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@pgsql_db:5432/${POSTGRES_MOVIE_DB}
       - CAST_SERVICE_HOST_URL="http://cast-service:8000/api/v1/casts"
 
   cast_service:
@@ -26,21 +26,21 @@ services:
     ports:
       - 8082:8080
     environment:
-      - DATABASE_URI=postgresql://db_username:db_password@pgsql_db:5432/cast_db_dev
+      - DATABASE_URI=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@pgsql_db:5432/${POSTGRES_CAST_DB}
 
   pgsql_db:
     image: postgres:latest
+    container_name: pgsql_db
     ports:
       - 5432:5432
     volumes:
       - ./scripts/1-init.sql:/docker-entrypoint-initdb.d/1-init.sql
       - ./postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=db_username
-      - POSTGRES_PASSWORD=db_password
-      - POSTGRES_MOVIE_DB=movie_db
-      - POSTGRES_CAST_DB=cast_db
-
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_MOVIE_DB=${POSTGRES_MOVIE_DB}
+      - POSTGRES_CAST_DB=${POSTGRES_CAST_DB}
 
 volumes:
   postgres_data: {}
