@@ -1,0 +1,47 @@
+version: "3.7"
+
+services:
+  movie_service:
+    container_name: movie_service
+    depends_on:
+      - pgsql_db
+    build: ./movie-service
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8080
+    volumes:
+      - ./movie-service/:/app/
+    ports:
+      - 8081:8080
+    environment:
+      - DATABASE_URI=postgresql://db_username:db_password@pgsql_db:5432/movie_db_dev
+      - CAST_SERVICE_HOST_URL="http://cast-service:8000/api/v1/casts"
+
+  cast_service:
+    container_name: cast_service
+    depends_on:
+      - pgsql_db
+    build: ./cast-service
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8080
+    volumes:
+      - ./cast-service/:/app/
+    ports:
+      - 8082:8080
+    environment:
+      - DATABASE_URI=postgresql://db_username:db_password@pgsql_db:5432/cast_db_dev
+
+  pgsql_db:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    volumes:
+      - ./scripts/1-init.sql:/docker-entrypoint-initdb.d/1-init.sql
+      - ./postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=db_username
+      - POSTGRES_PASSWORD=db_password
+      - POSTGRES_MOVIE_DB=movie_db
+      - POSTGRES_CAST_DB=cast_db
+
+
+volumes:
+  postgres_data: {}
+  scripts: {}
