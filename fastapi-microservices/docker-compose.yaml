@@ -5,6 +5,7 @@ services:
     container_name: movie_service
     depends_on:
       - pgsql_db
+      - cast_service
     build: ./movie-service
     command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8080
     volumes:
@@ -13,7 +14,7 @@ services:
       - 8081:8080
     environment:
       - DATABASE_URI=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@pgsql_db:5432/${POSTGRES_MOVIE_DB}
-      - CAST_SERVICE_HOST_URL="http://cast_service:8082/api/v1/casts"
+      - CAST_SERVICE_HOST_URL=http://cast_service:8080/api/v1/casts
 
   cast_service:
     container_name: cast_service
