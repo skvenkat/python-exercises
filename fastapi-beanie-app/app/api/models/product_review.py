@@ -26,10 +26,10 @@ class ProductReview(Document):
         }
 
 class UpdateProductReview(BaseModel):
-    name: Optional[str],
-    product: Optional[str],
-    rating: Optional[float],
-    review: Optional[str],
+    name: Optional[str]
+    product: Optional[str]
+    rating: Optional[float]
+    review: Optional[str]
     date: Optional[datetime]
 
     class Config:

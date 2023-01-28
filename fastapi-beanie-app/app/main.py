@@ -1,5 +1,17 @@
-import uvicorn
+from fastapi import FastAPI
 
-if __name__ == '__main__':
-    uvicorn.run("server.app:app", host="0.0.0.0", port=8080, reload=True)
+from app.api.routes import product_review
+from app.api.db import init_db
 
+
+app = FastAPI()
+
+@app.on_event("startup")
+async def start_db():
+    await init_db()
+
+@app.get("/", tags=["Root"])
+async def home() -> dict:
+    return {"message": "This app is powered by FastAPI-Beanie combo..."}
+
+app.include_router(product_review, prefix="/api/v1/reviews", tags=["reviews"])
