@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.yml -c -o fastapi-microservices-helm
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: pgsql-db
+  name: pgsql-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: pgsql-db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.yml -c -o fastapi-microservices-helm
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: pgsql-db
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_CAST_DB
+            - name: POSTGRES_MOVIE_DB
+            - name: POSTGRES_PASSWORD
+            - name: POSTGRES_USER
+          image: postgres:latest
+          name: pgsql-db
+          ports:
+            - containerPort: 5432
+          resources: {}
+          volumeMounts:
+            - mountPath: /docker-entrypoint-initdb.d/1-init.sql
+              name: pgsql-db-claim0
+            - mountPath: /var/lib/postgresql/data
+              name: pgsql-db-claim1
+      restartPolicy: Always
+      volumes:
+        - name: pgsql-db-claim0
+          persistentVolumeClaim:
+            claimName: pgsql-db-claim0
+        - name: pgsql-db-claim1
+          persistentVolumeClaim:
+            claimName: pgsql-db-claim1
+status: {}
