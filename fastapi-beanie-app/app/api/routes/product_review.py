@@ -1,4 +1,4 @@
-from beanie import pydanticObjectId
+from beanie import PydanticObjectId
 from fastapi import APIRouter, HTTPException
 from typing import List
 
@@ -12,17 +12,17 @@ async def add_product_review(review: ProductReview) -> dict:
     return {"message": "Review added successfully!"}
 
 @router.get("/", response_description="Review records fetched from database")
-async def get_product_reviews() -> List(ProductReview):
+async def get_product_reviews() -> List[ProductReview]:
     reviews = await ProductReview.find_all().to_list()
     return reviews
 
 @router.get("/{id}", response_description="Review record fetched from database")
-async def get_product_review(id: pydanticObjectId) -> ProductReview:
+async def get_product_review(id: PydanticObjectId) -> ProductReview:
     review = await ProductReview.get(id)
     return review
 
 @router.put("/{id}", response_description="Review record updated in the database")
-async def update_product_review(id: pydanticObjectId, req: UpdateProductReview) -> ProductReview:
+async def update_product_review(id: PydanticObjectId, req: UpdateProductReview) -> ProductReview:
     req = {k:v for k,v in req.dict().items() if v is not None}
     update_query = { "$set": {
             field: value for field, value in req.items()
@@ -37,7 +37,7 @@ async def update_product_review(id: pydanticObjectId, req: UpdateProductReview) 
     return review
 
 @router.delete("/{id}", response_description="Review record deleted in the database")
-async def delete_product_review(id: pydanticObjectId) -> dict:
+async def delete_product_review(id: PydanticObjectId) -> dict:
     review = await ProductReview.get(id)
 
     if not review:

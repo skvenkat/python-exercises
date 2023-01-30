@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.api.routes import product_review
+from app.api.routes.product_review import router
 from app.api.db import init_db
 
 
@@ -14,4 +14,4 @@ async def start_db():
 async def home() -> dict:
     return {"message": "This app is powered by FastAPI-Beanie combo..."}
 
-app.include_router(product_review, prefix="/api/v1/reviews", tags=["reviews"])
+app.include_router(router, prefix="/api/v1/reviews", tags=["reviews"])
