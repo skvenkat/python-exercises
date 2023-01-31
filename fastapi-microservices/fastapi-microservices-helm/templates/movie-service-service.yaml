@@ -6,14 +6,14 @@ metadata:
     kompose.version: 1.26.0 (40646f47)
   creationTimestamp: null
   labels:
-    io.kompose.service: pgsql-db
-  name: pgsql_db
+    io.kompose.service: movie-service
+  name: movie-service
 spec:
   ports:
-    - name: "5432"
-      port: 5432
-      targetPort: 5432
+    - name: "8081"
+      port: 8081
+      targetPort: 8080
   selector:
-    io.kompose.service: pgsql-db
+    io.kompose.service: movie-service
 status:
   loadBalancer: {}

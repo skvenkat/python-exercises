@@ -35,9 +35,9 @@ spec:
             - "8080"
           env:
             - name: CAST_SERVICE_HOST_URL
-              value: http://cast_service:8080/api/v1/casts
+              value: http://cast-service:8080/api/v1/casts
             - name: DATABASE_URI
-              value: postgresql://:@pgsql_db:5432/
+              value: postgresql://:@pgsql-db:5432/
           image: movie-service
           name: movie-service
           ports:

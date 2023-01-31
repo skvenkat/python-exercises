@@ -35,7 +35,7 @@ spec:
             - "8080"
           env:
             - name: DATABASE_URI
-              value: postgresql://:@pgsql_db:5432/
+              value: postgresql://:@pgsql-db:5432/
           image: cast-service
           name: cast-service
           ports:
