@@ -2,12 +2,13 @@ version: "3.7"
 
 services:
   movie_service:
+    image: fastapi-microservices_movie_service:latest
     container_name: movie_service
     depends_on:
       - pgsql_db
       - cast_service
     build: ./movie-service
-    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8080
+    #command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8080
     volumes:
       - ./movie-service/:/app/
     ports:
@@ -17,11 +18,12 @@ services:
       - CAST_SERVICE_HOST_URL=http://cast_service:8080/api/v1/casts
 
   cast_service:
+    image: fastapi-microservices_cast_service:latest
     container_name: cast_service
     depends_on:
       - pgsql_db
     build: ./cast-service
-    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8080
+    #command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8080
     volumes:
       - ./cast-service/:/app/
     ports:
