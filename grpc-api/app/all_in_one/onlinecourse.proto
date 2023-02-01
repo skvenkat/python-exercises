@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+message Article {
+    string text = 1;
+}
+
+message Video {
+    enum VideoType {
+        UNSPECIFIED = 0;
+        MP4 = 1;
+        MOV = 2;
+        OTHERS = 3;
+    }
+    VideoType type = 1;
+    string url = 2;   
+}
+
+message Lecture {
+    oneof content {
+        Video video = 1;
+        Article article = 2;
+    }
+}
+
+message Course {
+    string name = 1;
+    repeated string authors = 2;
+    map<string, Lecture> lectures = 3;
+}

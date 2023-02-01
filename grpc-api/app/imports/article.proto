@@ -1,0 +1,7 @@
+syntax="proto3";
+
+package grpcapi.onlinecourse.content;
+
+message Article {
+    string text = 1;
+}

@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package grpcapi.onlinecourse;
+
+import "article.proto";
+import "video.proto";
+
+message Lecture {
+    oneof content {
+        grpcapi.onlinecourse.content.Video video = 1;
+        content.Article article = 2;
+    };
+}

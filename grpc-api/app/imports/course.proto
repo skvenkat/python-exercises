@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package grpcapi.onlinecourse;
+
+import "lecture.proto";
+
+message Course {
+    string name = 1;
+    repeated string authors = 2;
+    map<string, Lecture> lectures = 3;
+}
