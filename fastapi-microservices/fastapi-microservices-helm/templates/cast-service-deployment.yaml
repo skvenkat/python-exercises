@@ -25,18 +25,16 @@ spec:
         io.kompose.service: cast-service
     spec:
       containers:
-        - args:
-            - uvicorn
-            - app.main:app
-            - --reload
-            - --host
-            - 0.0.0.0
-            - --port
-            - "8080"
-          env:
+        - env:
+            - name: POSTGRES_USER
+              value: ""
+            - NAME: POSTGRES_PASSWORD
+              value: ""
+            - NAME: POSTGRES_CAST_DB
+              value: "cast_db"
             - name: DATABASE_URI
-              value: postgresql://:@pgsql-db:5432/
-          image: cast-service
+              value: postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@pgsql-db:5432/$(POSTGRES_CAST_DB)
+          image: fastapi-microservices_cast_service:latest
           name: cast-service
           ports:
             - containerPort: 8080
