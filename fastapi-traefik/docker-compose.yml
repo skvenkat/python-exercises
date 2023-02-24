@@ -1,0 +1,31 @@
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  fast-traefik:
+    build: .
+    #command: uvicorn app.main:app --host 0.0.0.0
+    image: fastapi-traefik_fast-traefik:latest
+    volumes:
+      - .:/app
+    ports:
+      - 8000:9090
+    environment:
+      - DATABASE_URL=postgresql://fastapi_traefik:fastapi_traefik@pgsql-db:5432/fastapi_traefik
+    depends_on:
+     - pgsql-db
+
+  pgsql-db:
+    image: postgres:latest
+    volumes:
+     - data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=fastapi_traefik
+      - POSTGRES_PASSWORD=fastapi_traefik
+      - POSTGRES_DB=fastapi_traefik
+  
+volumes:
+  data: {}
