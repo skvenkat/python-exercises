@@ -10,7 +10,7 @@ services:
     volumes:
       - .:/app
     ports:
-      - 8000:9090
+      - 9090:8000
     environment:
       - DATABASE_URL=postgresql://fastapi_traefik:fastapi_traefik@pgsql-db:5432/fastapi_traefik
     depends_on:

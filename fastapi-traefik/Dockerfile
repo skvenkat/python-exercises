@@ -9,7 +9,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 # Prevents Python from buffering stdout and stderr (equivalent to python -u option)
 ENV PYTHONUNBUFFERED 1
 
-COPY requirements.txt .
+COPY requirements.txt /app/requirements.txt
 
 RUN apt-get update \
     && apt-get install gcc -y \
