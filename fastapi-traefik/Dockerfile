@@ -18,8 +18,7 @@ RUN apt-get update \
 RUN apt-get install -y libpq-dev python3-dev
 
 RUN pip install -r /app/requirements.txt --no-cache-dir
-#&& rm -rf /root/.cache/pip
 
 COPY . /app/
 
-ENTRYPOINT ["uvicorn", "app.main:app", "--reload", "--port", "8080"]
+ENTRYPOINT ["uvicorn", "app.main:app", "--reload", "--port", "8080", "--host", "0.0.0.0"]

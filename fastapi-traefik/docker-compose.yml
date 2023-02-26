@@ -10,11 +10,14 @@ services:
     volumes:
       - .:/app
     ports:
-      - 9090:8000
+      - 9080:8080
     environment:
       - DATABASE_URL=postgresql://fastapi_traefik:fastapi_traefik@pgsql-db:5432/fastapi_traefik
     depends_on:
-     - pgsql-db
+      - pgsql-db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.fastapi.rule=Host(`fastapi.home-lab.io`)"
 
   pgsql-db:
     image: postgres:latest
@@ -27,5 +30,14 @@ services:
       - POSTGRES_PASSWORD=fastapi_traefik
       - POSTGRES_DB=fastapi_traefik
   
+  traefik:
+    image: traefik:latest
+    ports:
+      - 8008:80
+      - 9090:8080
+    volumes:
+      - "./traefik-dev.toml:/etc/traefik/traefik.toml"
+      - "/var/run/docker.sock:/var/run/docker/sock:ro"
+
 volumes:
   data: {}
