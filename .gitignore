@@ -131,3 +131,4 @@ dmypy.json
 # Custom
 postgres_data/
 db/
+data/
