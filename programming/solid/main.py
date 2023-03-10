@@ -1,8 +1,13 @@
 # python-exercises/programming/solid/main.py
 
-from single_resp import Duck, Communicator
+from liskov_substitute import *
+
 if __name__ == '__main__':
     d1 = Duck("John")
-    d2 = Duck("Peter")
+    d2 = Crow("Peter")
+    scvs = SimpleConversation2(d1, d2)
     commn = Communicator("greeting")
-    commn.communicate(d1, d2)
+    commn.communicate(scvs,"")
+    commn.communicate(scvs,"greet")
+    commn.communicate(scvs,"qa2")
+    commn.communicate(scvs,"qa1")
