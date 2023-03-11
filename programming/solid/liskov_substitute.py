@@ -11,11 +11,11 @@ class Bird(ABC):
         self.name = name
 
     @abstractmethod
-    def fly(self):
+    def fly(self) -> None:
         pass
     
     @abstractmethod
-    def swim(self):
+    def swim(self) -> None:
         pass
     
     @abstractmethod
@@ -23,20 +23,20 @@ class Bird(ABC):
         pass
     
 class Crow(Bird):
-    def fly(self):
+    def fly(self) -> None:
         print(f"{self.name} is flying high and fast!")
     
-    def swim(self):
+    def swim(self) -> None:
         raise NotImplementedError("Crows don't swim!")
     
     def do_sound(self) -> str:
         return "Caw!"
 
 class Duck(Bird):
-    def fly(self):
+    def fly(self) -> None:
         print(f"{self.name} is not flying high!")
     
-    def swim(self):
+    def swim(self) -> None:
         print(f"{self.name} is swimming fast!")
     
     def do_sound(self) -> str:

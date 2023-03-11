@@ -1,6 +1,7 @@
 # python-exercises/programming/solid/main.py
 
-from liskov_substitute import *
+from liskov_substitute import SimpleConversation2, Communicator
+from interface_segregation import Duck, Crow
 
 if __name__ == '__main__':
     d1 = Duck("John")
