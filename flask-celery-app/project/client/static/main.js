@@ -42,4 +42,3 @@ function getStatus(taskID) {
   })
   .catch(err => console.log(err));
 }
-
