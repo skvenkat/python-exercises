@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -c
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: worker
+  name: worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: worker
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -c
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: worker
+    spec:
+      containers:
+        - args:
+            - celery
+            - --app
+            - project.server.tasks.celery
+            - worker
+            - --loglevel
+            - info
+            - --logfile=project/logs/celery.log
+          env:
+            - name: APP_SETTINGS
+              value: project.server.config.DevelopmentConfig
+            - name: CELERY_BROKER_URL
+              value: redis://redis:6379/0
+            - name: CELERY_RESULT_BACKEND
+              value: redis://redis:6379/0
+            - name: FLASK_DEBUG
+              value: "1"
+          image: worker
+          name: worker
+          resources: {}
+          volumeMounts:
+            - mountPath: /usr/src/app
+              name: worker-claim0
+      restartPolicy: Always
+      volumes:
+        - name: worker-claim0
+          persistentVolumeClaim:
+            claimName: worker-claim0
+status: {}

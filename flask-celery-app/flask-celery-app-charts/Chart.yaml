@@ -1,0 +1,8 @@
+name: flask-celery-app-charts
+description: A generated Helm Chart for flask-celery-app-charts from Skippbox Kompose
+version: 0.0.1
+apiVersion: v1
+keywords:
+  - flask-celery-app
+sources:
+home:
