@@ -11,4 +11,7 @@ spec:
   resources:
     requests:
       storage: 100Mi
+  storageClassName: local-storage
+  volumeMode: Filesystem
+  volumeName: worker-pv0
 status: {}
