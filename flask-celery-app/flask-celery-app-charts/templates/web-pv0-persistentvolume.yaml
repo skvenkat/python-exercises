@@ -1,14 +1,24 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-name: web-pv0
+  name: web-pv0
+  labels:
+    type: local
 spec:
-capacity:
-  storage: 100Mi
-volumeMode: Filesystem
-accessModes:
-  - ReadWriteOnce
-persistentVolumeClaimPolicy: Retain
-storageClassName: local-storage
-local:
-  path: /opt/k8s/storage/web-pv0
+  capacity:
+    storage: 100Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-storage
+  local:
+    path: /opt/k8s/storage/web-pv0
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - home-lab
