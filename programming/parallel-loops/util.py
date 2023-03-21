@@ -20,5 +20,5 @@ def timer(func):
 # execute a task
 def task(value):
     quot = value%2
-    print(f'.done {value} || {quot}')
+    print(f'.done {value} || {quot}', flush=True)
     return quot
